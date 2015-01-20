@@ -1,0 +1,169 @@
+#!/bin/sh
+
+#/ Usage: whitespace file [line_number | line_number_range]
+#/   [-s [space]] [-t [tab]] [-r [carriage]] [-n [newline]]
+#/   [-L [left_delimeter]] [-R [right_delimeter]]
+
+__usage() {
+
+  grep '^#/' <"$0" | cut -c4- 1>&2
+
+}
+
+__error() {
+
+  # pipe error message to `stderr`
+	echo "whitespace: $1" 1>&2
+
+  # pipe usage message to `stderr` if $2 is set
+	if [ -n "$2" ]; then
+		__usage
+	fi
+
+	exit 1
+
+}
+
+__assert_positive_integer() {
+
+  # error if not integer
+  case "$1" in
+    *[!0-9]* )
+      __error "$1: Not an integer"
+      ;;
+  esac
+
+  # error if < 1
+  if [ "$1" -lt 1 ]; then
+    __error "$1: Not a positive integer"
+  fi
+
+}
+
+# parse command line arguments
+more_flags=1
+while [ $# -gt 0 ]; do
+  if [ "$more_flags" -eq 1 ]; then
+    arg="$1"
+    case "$1" in
+      # flags with optional value
+      -s | -t | -r | -n | -L | -R)
+        # check if a value was specified after the flag
+        if [[ "$2" == -* ]]; then
+          val=""
+        else
+          val="$2"
+        	shift
+        fi
+        case "$arg" in
+          -s) space="$val";;
+          -t) tab="$val";;
+          -r) carriage_return="$val";;
+          -n) newline="$val";;
+          -L) L="$val";;
+          -R) R="$val";;
+        esac
+        ;;
+      # bare arguments (ie. non-flag)
+      *)
+         if [ "$arg" == "--" ]; then
+           more_flags=0
+           shift
+           continue
+         fi
+         if [[ "$arg" == -* ]]; then
+           __error "Unrecognized option $arg"
+         fi
+         args="$args $1"
+         ;;
+    esac
+  else
+    args="$args $1"
+  fi
+  shift
+done
+
+# set $file and $line_number
+set -- $args
+file=$1
+line_number=$2
+
+# exit if $file not set
+if [ ! -n "$file" ]; then
+  __error "Need a file" 1
+fi
+
+# exit if $file doesn't exist
+if [ ! -f "$file" ]; then
+  __error "$file: No such file"
+fi
+
+# set variables to their default values if not already set via the command line
+L=${L-"("}
+R=${R-")"}
+space=$L${space-'\\s'}$R
+tab=$L${tab-'\\t'}$R
+carriage_return=$L${carriage_return-'\\r'}$R
+newline=$L${newline-'\\n'}$R
+
+parse() {
+
+	# use `od` to mark out the characters we want to visualise
+	od -An -ta |
+
+	# replace newlines with spaces; `od` output is over multiple lines
+	tr '\n' ' ' |
+
+	# replace the characters marked out by `od`
+	sed -e "s/sp/$space/g" \
+	    -e "s/ht/$tab/g" \
+	    -e "s/cr/$carriage_return/g" \
+	    -e "s/nl/$newline/g" |
+
+	# remove whitespace
+	sed -e s/[[:space:]]*//g
+
+}
+
+# $line_number was specified
+if [ -n "$line_number" ]; then
+
+	# $line_number is a range
+	if [[ $line_number == *","* ]]; then
+
+		# extract the $start and $end parts of the range
+		start=${line_number%","*}
+		end=${line_number##*,}
+
+    # error if $start or $end are not positive integers
+    __assert_positive_integer "$start"
+    __assert_positive_integer "$end"
+
+		# error if $start > $end
+		if [ "$start" -gt "$end" ]; then
+		  __error "$line_number: Invalid range"
+		fi
+
+		# parse the range
+		sed -n $start","$end"p" $file | parse
+
+  else
+
+    # error if $line_number is not a positive integer
+    __assert_positive_integer "$line_number"
+
+		# get all lines in $file starting from $line_number
+	  tail -n+$line_number $file |
+
+		# parse only the first line (ie. $line_number)
+	  head -n1 | parse
+
+	fi
+
+# $line_number was not specified
+else
+
+	# parse the entire $file
+	cat $file | parse
+
+fi

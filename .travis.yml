@@ -1,0 +1,8 @@
+language: sh
+
+before_script:
+  - chmod +x whitespace
+
+script:
+  - cd test
+  - sh roundup.sh
