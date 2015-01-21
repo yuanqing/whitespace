@@ -8,7 +8,7 @@
 usage: whitespace file [start_line [end_line]]
   [-s [space_marker]]
   [-t [tab_marker]]
-  [-r [carriage_marker]]
+  [-r [carriage_return_marker]]
   [-n [newline_marker]]
   [-L [left_delimeter]]
   [-R [right_delimeter]]
