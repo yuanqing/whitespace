@@ -37,7 +37,7 @@ Run the [Roundup](https://github.com/bmizerany/roundup) tests like so:
 
 ```
 $ cd test
-$ sh roundup.sh
+$ sh vendor/roundup.sh
 ```
 
 ## Installation
