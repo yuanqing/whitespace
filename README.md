@@ -21,14 +21,14 @@ $ cat foo
 foo  bar
 baz  qux
 bim  bam
-$ whitespace example 1 2
+$ whitespace foo 1 2
 foo(\s)(\s)bar(\n)baz(\t)qux(\n)
-$ whitespace example 1
+$ whitespace foo 1
 foo(\s)(\s)bar(\n)
-$ whitespace example 1 -s S -n N
+$ whitespace foo 1 -s S -n N
 foo(S)(S)bar(N)
-$ whitespace example 1 -s S -n N -L [ -R ]
-foo[S][S]bar[n]
+$ whitespace foo 1 -s S -n N -L [ -R ]
+foo[S][S]bar[N]
 ```
 
 ## Tests
