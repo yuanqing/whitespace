@@ -17,7 +17,7 @@ __fail() {
 it_allows_the_double_dash_construct() {
 
   test "$(whitespace -- fixtures/@complex)" = 'foobar\s\t\r\n(\n)foo(\s)bar(\n)baz(\t)(\t)foo(\r)(\s)'
-  test "$(whitespace -- fixtures/@complex 2)" = 'baz(\t)(\t)foo(\r)(\s)'
+  test "$(whitespace -- fixtures/@complex 3)" = 'baz(\t)(\t)foo(\r)(\s)'
   test "$(whitespace -- fixtures/@complex 2 3)" = 'foo(\s)bar(\n)baz(\t)(\t)foo(\r)(\s)'
 
   test "$(whitespace -L -- fixtures/@complex)" = 'foobar\s\t\r\n\n)foo\s)bar\n)baz\t)\t)foo\r)\s)'
