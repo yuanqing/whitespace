@@ -5,7 +5,7 @@
 ## Usage
 
 ```
-Usage: whitespace file [start_line [end_line]]
+usage: whitespace file [start_line [end_line]]
   [-s [space_marker]]
   [-t [tab_marker]]
   [-r [carriage_marker]]

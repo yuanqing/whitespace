@@ -1,12 +1,12 @@
 #!/bin/sh
 
-#/ Usage: whitespace file [start_line [end_line]]
-#/   [-s [space]]
-#/   [-t [tab]]
-#/   [-r [carriage]]
-#/   [-n [newline]]
-#/   [-L [left_delimeter]]
-#/   [-R [right_delimeter]]
+# usage: whitespace file [start_line [end_line]]
+#   [-s [space_marker]]
+#   [-t [tab_marker]]
+#   [-r [carriage_marker]]
+#   [-n [newline_marker]]
+#   [-L [left_delimeter]]
+#   [-R [right_delimeter]]
 
 __usage() {
 
