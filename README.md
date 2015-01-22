@@ -1,4 +1,4 @@
-# whitespace [![Version](https://img.shields.io/badge/version-v0.0.0-orange.svg?style=flat)](https://github.com/yuanqing/whitespace/releases) [![Build Status](https://img.shields.io/travis/yuanqing/whitespace.svg?branch=master&style=flat)](https://travis-ci.org/yuanqing/whitespace)
+# whitespace [![Version](https://img.shields.io/badge/version-v0.1.0-orange.svg?style=flat)](https://github.com/yuanqing/whitespace/releases) [![Build Status](https://img.shields.io/travis/yuanqing/whitespace.svg?branch=master&style=flat)](https://travis-ci.org/yuanqing/whitespace)
 
 > A shell script for visualising the whitespace characters in text files.
 
