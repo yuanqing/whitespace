@@ -1,12 +1,12 @@
 #!/bin/sh
 
-# usage: whitespace file [start_line [end_line]]
-#   [-s [space_marker]]
-#   [-t [tab_marker]]
-#   [-r [carriage_return_marker]]
-#   [-n [newline_marker]]
-#   [-L [left_delimeter]]
-#   [-R [right_delimeter]]
+#/ usage: whitespace file [start_line [end_line]]
+#/   [-s [space_marker]]
+#/   [-t [tab_marker]]
+#/   [-r [carriage_return_marker]]
+#/   [-n [newline_marker]]
+#/   [-L [left_delimeter]]
+#/   [-R [right_delimeter]]
 
 __usage() {
 
@@ -164,7 +164,7 @@ if [ -n "$start_line" ]; then
       __error "[$start_line, $end_line]: Invalid range"
     fi
 
-    num_lines=$((end_line-start_line+1))
+    num_lines=`expr $end_line - $start_line + 1`
 
   else
 
