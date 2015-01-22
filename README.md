@@ -49,6 +49,11 @@ $ curl -sS -o install.sh https://raw.githubusercontent.com/yuanqing/whitespace/m
 $ sh install.sh
 ```
 
+## Changelog
+
+- 0.1.0
+  - Initial release
+
 ## License
 
 [MIT](https://github.com/yuanqing/whitespace/blob/master/LICENSE)
